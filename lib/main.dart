@@ -15,8 +15,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme:
-          ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.red[900]),
+      theme: ThemeData(
+          primarySwatch: Colors.blue,
+          primaryColor: Colors.pinkAccent[400],
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: Colors.pinkAccent[400],
+              // selectedIconTheme: IconThemeData(color: Colors.white),
+              selectedItemColor: Colors.white)),
       home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );

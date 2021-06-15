@@ -6,6 +6,7 @@ class UserBloc extends BlocBase {
   final _usersController = BehaviorSubject();
 
   Map<String, Map> _users = {};
+  ValueStream get outUsers => _usersController.stream;
 
   UserBloc() {
     addUserListener();
@@ -60,7 +61,8 @@ class UserBloc extends BlocBase {
         moneySpent += snap["totalPrice"];
       }
 
-      _users[uid].addAll({"numOrders": pedidos, "moneySpent": moneySpent});
+      _users[uid].addAll(
+          <String, dynamic>{"numOrders": pedidos, "moneySpent": moneySpent});
 
       _usersController.add(_users.values.toList());
     });
@@ -68,6 +70,24 @@ class UserBloc extends BlocBase {
 
   void unsubscribeToOrders(String uid) {
     _users[uid]["subscription"].cancel();
+  }
+
+  void onSearch(String search) {
+    if (search.trim().isEmpty) {
+      _usersController.add(_users.values.toList());
+    } else {
+      _usersController.add(_filter(search.trim()));
+    }
+  }
+
+  List<Map> _filter(String search) {
+    List<Map> filteredUsers = List.from(_users.values.toList());
+    filteredUsers.retainWhere((user) {
+      print("Pesquisando $search em $user");
+      return user["name"].toUpperCase().contains(search.toUpperCase());
+    });
+
+    return filteredUsers;
   }
 
   @override

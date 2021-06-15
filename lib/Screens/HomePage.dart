@@ -1,4 +1,6 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciamento_de_loja/Blocs/UseBloc.dart';
 import 'package:gerenciamento_de_loja/Tabs/UsersTab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,22 +39,26 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "Produtos"),
           ],
         ),
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: (p) {
-            setState(() {
-              _currentPage = p;
-            });
-          },
-          children: [
-            UsersTab(),
-            Container(
-              color: Colors.blueAccent,
-            ),
-            Container(
-              color: Colors.redAccent,
-            ),
-          ],
+        body: BlocProvider(
+          blocs: [Bloc((i) => UserBloc())],
+          dependencies: [],
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (p) {
+              setState(() {
+                _currentPage = p;
+              });
+            },
+            children: [
+              UsersTab(),
+              Container(
+                color: Colors.blueAccent,
+              ),
+              Container(
+                color: Colors.redAccent,
+              ),
+            ],
+          ),
         ),
       ),
     );

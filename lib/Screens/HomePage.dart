@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:gerenciamento_de_loja/Blocs/OrdersBloc.dart';
 import 'package:gerenciamento_de_loja/Blocs/UserBloc.dart';
 import 'package:gerenciamento_de_loja/Tabs/OrdersTab.dart';
@@ -60,7 +61,53 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+        floatingActionButton: _buildFloatingActionButton(),
       ),
     );
+  }
+
+  Widget _buildFloatingActionButton() {
+    final primaryColor = Theme.of(context).primaryColor;
+    switch (_currentPage) {
+      case 0:
+        return null;
+      case 1:
+        return SpeedDial(
+          child: Icon(Icons.sort),
+          backgroundColor: primaryColor,
+          overlayOpacity: 0.4,
+          overlayColor: Colors.black,
+          children: [
+            SpeedDialChild(
+                child: Icon(
+                  Icons.arrow_downward,
+                  color: primaryColor,
+                ),
+                backgroundColor: Colors.white,
+                label: "Concluídos abaixo",
+                labelBackgroundColor: Colors.white,
+                onTap: () {
+                  BlocProvider.getBloc<OrdersBloc>()
+                      .setOrderCriteria(SortCriteria.READY_LAST);
+                }),
+            SpeedDialChild(
+                child: Icon(
+                  Icons.arrow_upward,
+                  color: primaryColor,
+                ),
+                backgroundColor: Colors.white,
+                label: "Concluídos Acima",
+                labelBackgroundColor: Colors.white,
+                onTap: () {
+                  BlocProvider.getBloc<OrdersBloc>()
+                      .setOrderCriteria(SortCriteria.READY_FIRST);
+                }),
+          ],
+        );
+      case 2:
+        return null;
+      default:
+        return null;
+    }
   }
 }

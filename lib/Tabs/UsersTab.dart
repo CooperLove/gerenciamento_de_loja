@@ -1,6 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:gerenciamento_de_loja/Blocs/UseBloc.dart';
+import 'package:gerenciamento_de_loja/Blocs/UserBloc.dart';
 import 'package:gerenciamento_de_loja/Tiles/UserTile.dart';
 import 'package:shimmer/shimmer.dart';
 

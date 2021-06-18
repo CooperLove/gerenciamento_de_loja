@@ -1,10 +1,13 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:gerenciamento_de_loja/Blocs/CategoryBloc.dart';
 import 'package:gerenciamento_de_loja/Blocs/OrdersBloc.dart';
 import 'package:gerenciamento_de_loja/Blocs/UserBloc.dart';
+import 'package:gerenciamento_de_loja/Screens/ProductsTab.dart';
 import 'package:gerenciamento_de_loja/Tabs/OrdersTab.dart';
 import 'package:gerenciamento_de_loja/Tabs/UsersTab.dart';
+import 'package:gerenciamento_de_loja/Widgets/EditCategoryDialogue.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -55,9 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               UsersTab(),
               OrdersTab(),
-              Container(
-                color: Colors.redAccent,
-              ),
+              ProductsTab(),
             ],
           ),
         ),
@@ -105,7 +106,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         );
       case 2:
-        return null;
+        return FloatingActionButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (context) => EditCategoryDialogue(
+                      categoryBloc: CategoryBloc(null),
+                    ));
+          },
+          child: Icon(Icons.add),
+        );
       default:
         return null;
     }
